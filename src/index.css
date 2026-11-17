@@ -1,0 +1,357 @@
+/* ==========================================================================
+   Design tokens and base styles
+   Palette: warm ivory paper, deep forest ink, restrained brass accent.
+   Type: Fraunces (display serif) with Manrope (text sans).
+   ========================================================================== */
+
+:root {
+  /* Colour */
+  --ivory: #f5f1e8;
+  --paper: #fbf9f4;
+  --ink: #14201c;
+  --forest: #10332a;
+  --forest-deep: #0a231c;
+  --moss: #3d6657;
+  --muted: #55615b;
+  --brass: #b08d57;
+  --brass-deep: #7d5f2e; /* brass that passes 4.5:1 as text on ivory */
+  --brass-light: #dcc496; /* brass for text on forest */
+  --line: rgba(20, 32, 28, 0.13);
+  --line-light: rgba(245, 241, 232, 0.16);
+  --danger: #a3341f;
+
+  /* Type */
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-text: 'Manrope Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Layout */
+  --gutter: clamp(20px, 5vw, 72px);
+  --section: clamp(88px, 12vw, 168px);
+  --radius: 20px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--forest);
+  color: var(--ivory);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* --- Utilities ----------------------------------------------------------- */
+
+.container {
+  width: min(1240px, 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: var(--section);
+  position: relative;
+  /* elements that slide in from the side must not widen the page */
+  overflow-x: clip;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--forest);
+  color: var(--ivory);
+  transform: translateY(-200%);
+  transition: transform 0.3s var(--ease);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 60;
+  background: var(--brass);
+  transform-origin: 0 50%;
+}
+
+/* A line of text that rises from behind an invisible edge. */
+.mask-line {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.12em;
+  margin-block: -0.12em;
+}
+
+.mask-line__inner {
+  display: block;
+  will-change: transform;
+}
+
+/* --- Eyebrow + section heading ------------------------------------------- */
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--moss);
+}
+
+.eyebrow__index {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  letter-spacing: 0;
+  color: var(--brass-deep);
+}
+
+.eyebrow__rule {
+  width: 36px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
+.section-heading {
+  display: grid;
+  gap: 24px;
+  margin-bottom: clamp(40px, 6vw, 72px);
+}
+
+.section-heading__title {
+  font-size: clamp(2.1rem, 4.6vw, 3.9rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+
+.section-heading__lead {
+  max-width: 46ch;
+  font-size: 1.125rem;
+  color: var(--muted);
+}
+
+.section-heading--light .eyebrow {
+  color: rgba(245, 241, 232, 0.72);
+}
+
+.section-heading--light .eyebrow__index {
+  color: var(--brass-light);
+}
+
+.section-heading--light .section-heading__lead {
+  color: rgba(245, 241, 232, 0.74);
+}
+
+/* --- Buttons and links ---------------------------------------------------- */
+
+.btn {
+  --btn-bg: var(--forest);
+  --btn-fg: var(--ivory);
+  --btn-hover: var(--brass);
+  --btn-hover-fg: var(--forest-deep);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+  overflow: hidden;
+  cursor: pointer;
+  isolation: isolate;
+  transition: color 0.45s var(--ease);
+}
+
+/* Colour floods up from the bottom edge on hover. */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--btn-hover);
+  border-radius: inherit;
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease);
+}
+
+.btn svg {
+  transition: transform 0.45s var(--ease);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: var(--btn-hover-fg);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: none;
+}
+
+.btn:hover svg {
+  transform: rotate(45deg);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.btn--light {
+  --btn-bg: var(--ivory);
+  --btn-fg: var(--forest-deep);
+  --btn-hover: var(--brass-light);
+}
+
+.btn--small {
+  min-height: 44px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+}
+
+.link-arrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-weight: 600;
+}
+
+.link-arrow::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 8px 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: 100% 50%;
+  transition: transform 0.5s var(--ease);
+}
+
+.link-arrow:hover::after {
+  transform: scaleX(0);
+}
+
+.link-arrow svg {
+  transition: transform 0.4s var(--ease);
+}
+
+.link-arrow:hover svg {
+  transform: translateY(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
