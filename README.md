@@ -16,6 +16,12 @@ npm run images     # regenerate optimised images from source-assets/
 
 `dist/` is a static site: upload it to any static host (Netlify, Vercel, GitHub Pages, cPanel).
 
+## Deployment (GitHub Pages)
+
+The site is published at https://dedsec7522.github.io/anamikaportfolio/ from the `gh-pages` branch, which holds the contents of `dist/`. Because it lives under `/anamikaportfolio/`, `base` in `vite.config.ts` is set to that path (local development is therefore at http://localhost:5173/anamikaportfolio/).
+
+To publish an update: run `npm run build`, then replace the contents of the `gh-pages` branch with the new `dist/` folder (keep the empty `.nojekyll` file) and push it.
+
 ## Updating content
 
 Everything the site says lives in one file: `src/content/profile.ts`. Edit the text there and every section updates.
